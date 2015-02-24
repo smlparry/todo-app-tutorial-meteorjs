@@ -8,7 +8,7 @@ if (Meteor.isClient) {
       }
   });
 
-  Template.body.events({
+    Template.body.events({
       "submit .new-task": function (event) {
         //   This function is called when the new task form is submitted
         var text = event.target.text.value;
@@ -24,5 +24,16 @@ if (Meteor.isClient) {
         // Prevent default form submit
         return false;
       }
-  })
+    });
+
+    Template.task.events({
+        'click .toggle-checked': function() {
+            //  Set the checked property to the opposite of its current value
+            Tasks.update(this._id, {$set: {checked: ! this.checked }});
+        },
+        'click .delete': function() {
+            //   Delete the item from the list
+            Tasks.remove(this._id);
+        }
+    });
 }
